@@ -1,0 +1,32 @@
+{
+	"build_systems":
+	[
+		{
+			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+			"name": "Anaconda Python Builder",
+			"selector": "source.python",
+			"shell_cmd": "\"python\" -u \"$file\""
+		}
+	],
+	"folders":
+	[
+		{
+			"file_exclude_patterns":
+			[
+				"philipshue.sublime-workspace",
+				"resources/lib/phue.pyo"
+			],
+			"folder_exclude_patterns":
+			[
+			],
+			"path": "."
+		}
+	],
+	"settings":
+	{
+		"extra_paths":
+		[
+			"/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages"
+		]
+	}
+}
