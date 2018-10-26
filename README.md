@@ -33,7 +33,7 @@ Kodi add-on for controlling Philips Hue lights.
 - Lights
     - [ ] List lights
     - [ ] Switch the light ON/OFF
-    ...
+    - ...
 
 ### Backlog
 
@@ -41,4 +41,3 @@ Kodi add-on for controlling Philips Hue lights.
     - [ ] List groups
     - [ ] Switch all the lights in group ON/OFF
     - ...
-- ...
