@@ -33,7 +33,7 @@ class PhilipsHueAddon():
         self.handle = int(sys.argv[1])
         # connect bridge
         self.hue = self.connecthue(HUE_BRIDGE_IP)
-        self.log('Philips Hue connected.')
+        self.log('Hue Bridge connected.')
         # parse addon url
         self.urlbase = 'plugin://' + self.addon.getAddonInfo('id')
         self.urlpath = sys.argv[0].replace(self.urlbase, '')
@@ -89,7 +89,7 @@ class PhilipsHueAddon():
         :param msg: str;
         :param icon: int; xbmcgui.NOTIFICATION_INFO (default)
         """
-        heading = '{0} ({1})'.format(self.addon.getAddonInfo('name'), self.addon.getAddonInfo('id'))
+        heading = '{0}'.format(self.addon.getAddonInfo('name'))
         xbmcgui.Dialog().notification(heading, msg, icon)
 
     """ ----- Action handlers ----- """

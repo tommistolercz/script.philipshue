@@ -7,7 +7,7 @@ Kodi add-on for controlling Philips Hue lights.
 - [Kodi](https://kodi.tv) 17.x or newer<br>
     (tested on: Kodi 17.6/macOS High Sierra, Kodi 17.6/LibreELEC 8.x, Kodi 18.0-beta3/Win 7)
 
-- Philips Hue
+- Philips Hue Bridge + light/s to control
 
 ## Installation
 
@@ -24,13 +24,21 @@ Kodi add-on for controlling Philips Hue lights.
 
 ### v1.0.0 **[WIP]**
 
-- Lights
-    - [ ] List lights
 - Common
     - [ ] Edit add-on settings
-    - [ ] Authorize add-on
     - [ ] EN/CZ translations
+    - [ ] List add-on main menu
+- Authorize
+    - [ ] Authorize add-on by pressing the button on hub
+- Lights
+    - [ ] List lights
+    - [ ] Switch the light ON/OFF
+    ...
 
 ### Backlog
 
-- [ ] Groups
+- Groups
+    - [ ] List groups
+    - [ ] Switch all the lights in group ON/OFF
+    - ...
+- ...
