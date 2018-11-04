@@ -18,8 +18,6 @@ sys.path.append(os.path.join(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('
 import phue  # noqa: E402
 
 
-HUE_BRIDGE_IP = '10.0.0.1'
-
 PY2, PY3 = ((sys.version_info[0] == 2), (sys.version_info[0] == 3))
 FOLDER, NOT_FOLDER = (True, False)
 
@@ -32,7 +30,7 @@ class PhilipsHueAddon():
         self.addon = xbmcaddon.Addon()
         self.handle = int(sys.argv[1])
         # connect bridge
-        self.hue = self.connecthue(HUE_BRIDGE_IP)
+        self.hue = self.connecthue(self.addon.getSetting('huebridgeip'))
         self.log('Hue Bridge connected.')
         # parse addon url
         self.urlbase = 'plugin://' + self.addon.getAddonInfo('id')
@@ -139,6 +137,9 @@ class PhilipsHueAddonError(Exception):
     :param errmsg: str
     """
     def __init__(self, errmsg):
+        """
+        :param errmsg: str
+        """
         self.errmsg = errmsg
 
 
