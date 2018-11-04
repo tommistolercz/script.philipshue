@@ -90,10 +90,13 @@ class PhilipsHueAddon():
         heading = '{0}'.format(self.addon.getAddonInfo('name'))
         xbmcgui.Dialog().notification(heading, msg, icon)
 
-    """ ----- Action handlers ----- """
+    # ===== Menu action handlers =====
 
     def listlights(self, **kwargs):
-        # get hue lights
+        """
+        List all lights.
+        :param **kwargs: dict() (None)
+        """
         lights = self.hue.get_light()
         self.log('Hue lights: {0}'.format(lights))
         # create list items for lights
@@ -113,12 +116,20 @@ class PhilipsHueAddon():
         xbmcplugin.addSortMethod(self.handle, xbmcplugin.SORT_METHOD_NONE)
         xbmcplugin.endOfDirectory(self.handle)
 
+    # ===== Contextmenu action handlers =====
+
     def setlight(self, **kwargs):
-        # set light
+        """
+        Set light.
+        :param **kwargs: dict:
+            lightid: int
+            param: str
+            value: obj
+        """
         lightid = kwargs.get('lightid', None)
         param = kwargs.get('param', None)
         value = kwargs.get('value', None)
-        if lightid is not None:
+        if all([lightid, param, value]):
             # value type mangling
             boolparams = ['on']
             intparams = []
