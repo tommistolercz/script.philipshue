@@ -54,12 +54,18 @@ msgctxt "#30031"
 msgid "ROOMS"
 msgstr ""
 
-# Lights (30040+)
+# Lights list (30040+)
 
-msgctxt "#30040"
-msgid "Switch the light ON"
+# Light controls (30050+)
+
+msgctxt "#30050"
+msgid "Switch on"
 msgstr ""
 
-msgctxt "#30041"
-msgid "Switch the light OFF"
+msgctxt "#30051"
+msgid "Switch off"
+msgstr ""
+
+msgctxt "#30052"
+msgid "Set color"
 msgstr ""
