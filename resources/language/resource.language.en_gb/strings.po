@@ -67,5 +67,5 @@ msgid "Switch off"
 msgstr ""
 
 msgctxt "#30052"
-msgid "Set color"
+msgid "Select color"
 msgstr ""

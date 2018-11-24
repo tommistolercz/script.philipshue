@@ -67,5 +67,5 @@ msgid "Switch off"
 msgstr "Vypnout světlo"
 
 msgctxt "#30052"
-msgid "Set color"
-msgstr "Nastavit barvu"
+msgid "Select color"
+msgstr "Zvolit barvu"

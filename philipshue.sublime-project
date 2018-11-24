@@ -13,13 +13,14 @@
 		{
 			"file_exclude_patterns":
 			[
-				"resources/lib/colortools.pyo",
-				"philipshue.sublime-workspace",
-				"resources/lib/phue.pyo"
+				"philipshue.sublime-workspace"
 			],
 			"folder_exclude_patterns":
 			[
-				"resources/lib/__pycache__"
+				"resources/lib/colorgram/_Archiv_",
+				"resources/data/_Archiv_",
+				"resources/lib/rgb_xy/_Archiv_",
+				"resources/lib/phue/_Archiv_"
 			],
 			"path": "."
 		}

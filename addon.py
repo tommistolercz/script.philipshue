@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-__all__ = ['PhilipsHueAddon', 'PhilipsHueAddonError']
-
 
 import json
 import os
@@ -17,8 +15,20 @@ import xbmcgui
 import xbmcplugin
 
 sys.path.append(os.path.join(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')), 'resources', 'lib'))
-import phue  # noqa: E402
 import colortools  # noqa: E402
+sys.path.append(os.path.join(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')), 'resources', 'lib', 'phue'))
+import phue  # noqa: E402
+sys.path.append(os.path.join(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')), 'resources', 'lib', 'colorgram'))
+import colorgram  # noqa: E402
+sys.path.append(os.path.join(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')), 'resources', 'lib', 'rgbxy'))
+import rgbxy  # noqa: E402
+"""
+converter = rgbxy.Converter(rgbxy.GamutB)  # GamutB (A19 Gen 1 Hue bulbs)
+converter.hex_to_xy('bada55')  # [0.3991853917195425, 0.498424689144739]
+converter.rgb_to_xy(255, 0, 0)  # [0.6484272236872118, 0.330856101472778]
+converter.get_random_xy_color()  # [0.3706941388849757, 0.19786410488389355]
+converter.xy_to_hex(0.3991853917195425, 0.498424689144739, bri=0.8)  # 'e9e860'
+"""
 
 
 PY2, PY3 = ((sys.version_info[0] == 2), (sys.version_info[0] == 3))
@@ -48,11 +58,11 @@ class PhilipsHueAddon():
         self.routing = {
             '/': self.listmainmenu,
             '/groups': self.listgroups,
-            '/group': None,
+            '/group/info': None,
             '/lights': self.listlights,
-            '/light': self.listlightdetail,
+            '/light/info': self.listlightinfo,
             '/light/on': self.setlighton,
-            '/light/color': self.setlightcolor,
+            '/light/color': self.selectlightcolor,
         }
         try:
             self.routing[self.urlpath]()
@@ -102,6 +112,7 @@ class PhilipsHueAddon():
     def listmainmenu(self):
         """
         List main menu.
+        (script://script.philipshue)
         """
         # create list items
         listitems = [
@@ -117,6 +128,7 @@ class PhilipsHueAddon():
     def listlights(self):
         """
         List lights.
+        (script://script.philipshue/lights)
         """
         # request hue api
         lights = self.hue.get_light()
@@ -127,15 +139,13 @@ class PhilipsHueAddon():
             li = xbmcgui.ListItem(lights[lightid]['name'])
             cmi = []
             if not lights[lightid]['state']['on']:
-                # light is off
                 cmi.append(('[COLOR blue]{0}[/COLOR]'.format(self.addon.getLocalizedString(30050)), 'RunPlugin({0})'.format(self.buildurl('/light/on', {'lightid': lightid, 'value': '1'}))))
             else:
-                # light is on
                 cmi.append(('[COLOR blue]{0}[/COLOR]'.format(self.addon.getLocalizedString(30051)), 'RunPlugin({0})'.format(self.buildurl('/light/on', {'lightid': lightid, 'value': '0'}))))
                 cmi.append(('[COLOR blue]{0}[/COLOR]'.format(self.addon.getLocalizedString(30052)), 'RunPlugin({0})'.format(self.buildurl('/light/color', {'lightid': lightid}))))
             li.addContextMenuItems(cmi)
             listitems.append(
-                (self.buildurl('/light', {'lightid': lightid}), li, FOLDER)
+                (self.buildurl('/light/info', {'lightid': lightid}), li, FOLDER)
             )
         # show list in kodi
         xbmcplugin.setContent(self.handle, 'files')
@@ -145,7 +155,8 @@ class PhilipsHueAddon():
 
     def listgroups(self):
         """
-        List light groups.
+        List groups.
+        (script://script.philipshue/groups)
         """
         # request hue api
         groups = self.hue.get_group()
@@ -166,17 +177,18 @@ class PhilipsHueAddon():
         xbmcplugin.addSortMethod(self.handle, xbmcplugin.SORT_METHOD_NONE)
         xbmcplugin.endOfDirectory(self.handle)
 
-    def listlightdetail(self):
+    def listlightinfo(self):
         """
-        List light detail.
+        List light info.
+        (script://script.philipshue/light/info&lightid=1)
         """
         # get url args
         lightid = int(self.urlargs.get('lightid'))
         # request hue api
         light = self.hue.get_light(lightid)
-        self.log('Listing detail for Philips Hue light: lightid:{0}, {1}'.format(lightid, light))
+        self.log('Listing info for Philips Hue light: lightid:{0}, {1}'.format(lightid, light))
         # create list items
-        listitems = []
+        listitems = []  # todo: light info?
         # show in kodi
         xbmcplugin.setContent(self.handle, 'files')
         xbmcplugin.addDirectoryItems(self.handle, listitems, len(listitems))
@@ -186,6 +198,7 @@ class PhilipsHueAddon():
     def setlighton(self):
         """
         Set light on/off.
+        (script://script.philipshue/light/on&lightid=1&value=1)
         """
         # get url args
         lightid = int(self.urlargs.get('lightid'))
@@ -196,9 +209,10 @@ class PhilipsHueAddon():
         self.log('Philips Hue light set: lightid:{0}, param:{1}, value:{2}. Result:{3}'.format(lightid, param, value, result))
         xbmc.executebuiltin('Container.refresh')
 
-    def setlightcolor(self):
+    def selectlightcolor(self):
         """
-        Set light color.
+        Select light color.
+        (script://script.philipshue/light/color&lightid=1)
         """
         # get url args
         lightid = int(self.urlargs.get('lightid'))
