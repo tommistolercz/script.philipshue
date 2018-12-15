@@ -33,7 +33,7 @@ Kodi add-on for controlling Philips Hue lights.
 - Lights
     - [ ] List lights
     - [ ] Switch the light ON/OFF
-    - ...
+    - [ ] Save current scene
 
 ### Backlog
 
@@ -41,3 +41,8 @@ Kodi add-on for controlling Philips Hue lights.
     - [ ] List groups
     - [ ] Switch all the lights in group ON/OFF
     - ...
+- [ ] Set scene based on currently playing track's albumart color
+- [ ] Save current light setup as a preset
+- [ ] theatre-like scene (dark red lights) is enabled automatically when kodi player starts
+- [ ] Key features must be accessible with TV remote only (i.e. Kodi context menu is not accessible on LG TV RC's due to known bugs in HDMI CEC standard implementation)
+- [ ] Set light color: [inspiration](https://github.com/benknight/hue-harmony)
